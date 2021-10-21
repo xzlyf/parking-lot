@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>员工管理</title>
+    <link rel="stylesheet" href="../../static/css/layui.css" media="all">
+
+</head>
+<body style="padding: 20px 20px">
+<table id="tableList" lay-filter="tableList"></table>
+<div id="paging"></div>
+</body>
+
+<script src="../../static/js/layui.js"></script>
+
+<script th:inline="none">
+    layui.use(['table', 'laypage'], function () {
+        var table = layui.table
+            , laypage = layui.laypage;
+
+        table.render({
+            elem: '#tableList'
+            , url: '/employee/findAll'
+            , cols: [[
+                {field: 'employeeNo', title: '编号', sort: true}
+                , {field: 'name', title: '姓名', sort: true}
+                , {field: 'createDate', title: '创建时间', sort: true}
+                , {field: 'updateDate', title: '更新时间', sort: true}
+                , {
+                    field: 'isEnable'
+                    , title: '启用/禁用'
+                    , sort: true
+                    , templet: function (d) {
+                        var state = "";
+                        if (d.isEnable) {
+                            state = "<input type='checkbox' value='" + d.id + "' id='status' lay-filter='stat' checked='checked' name='status'  lay-skin='switch' lay-text='开启|关闭' >";
+                        } else {
+                            state = "<input type='checkbox' value='" + d.id + "' id='status' lay-filter='stat'  name='status'  lay-skin='switch' lay-text='开启|关闭' >";
+                        }
+                        return state;
+                    }
+                }
+            ]]
+            , response: {
+                statusName: 'code', //规定返回的状态码字段为code
+                statusCode: 200 //规定成功的状态码为0
+            }
+            , parseData: function (res) {
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "data": res.data //解析数据列表
+                }
+            }
+
+        });
+        //分页
+        laypage.render({
+            elem: 'test1'
+            , count: 70 //数据总数，从服务端得到
+            , jump: function (obj, first) {
+                //obj包含了当前分页的所有参数，比如：
+                console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+                console.log(obj.limit); //得到每页显示的条数
+
+                //首次不执行
+                if (!first) {
+                    //do something
+                }
+            }
+        });
+
+    });
+</script>
+</html>
