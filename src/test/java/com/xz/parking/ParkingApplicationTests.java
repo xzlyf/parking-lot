@@ -1,5 +1,6 @@
 package com.xz.parking;
 
+import com.xz.parking.service.AdminService;
 import com.xz.parking.service.impl.AdminServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

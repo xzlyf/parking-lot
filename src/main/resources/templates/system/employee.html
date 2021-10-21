@@ -5,23 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>员工管理</title>
     <link rel="stylesheet" href="../../static/css/layui.css" media="all">
-
 </head>
 <body style="padding: 20px 20px">
+
+<div class="layui-form">
+    <div class="layui-input-inline">
+        <select id="type" lay-filter="aihao">
+            <option value="1" selected="">编号</option>
+            <option value="2">姓名</option>
+        </select>
+    </div>
+    <div class="layui-input-inline">
+        <input type="text" id="taskName" placeholder="请输入员工信息" autocomplete="off" class="layui-input">
+    </div>
+    <div class="layui-input-inline">
+        <button type="button" id="searchBtn" class="layui-btn layui-btn-md">搜索</button>
+    </div>
+</div>
+
+
 <table id="tableList" lay-filter="tableList"></table>
-<div id="paging"></div>
-</body>
 
 <script src="../../static/js/layui.js"></script>
 
 <script th:inline="none">
     layui.use(['table', 'laypage'], function () {
         var table = layui.table
-            , laypage = layui.laypage;
+            , $ = layui.$;
 
         table.render({
             elem: '#tableList'
             , url: '/employee/findAll'
+            , height: 'full-100'//高度自适应
+            , even: true//隔行换色
+            , page: true//开启分页
+            , limits: [10, 20, 50]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
+            , limit: 20 //每页默认显示的数量
+            , method: 'get'  //提交方式
             , cols: [[
                 {field: 'employeeNo', title: '编号', sort: true}
                 , {field: 'name', title: '姓名', sort: true}
@@ -42,35 +62,38 @@
                     }
                 }
             ]]
+            //绑定业务字段
             , response: {
                 statusName: 'code', //规定返回的状态码字段为code
                 statusCode: 200 //规定成功的状态码为0
             }
-            , parseData: function (res) {
-                return {
-                    "code": res.code, //解析接口状态
-                    "msg": res.msg, //解析提示文本
-                    "data": res.data //解析数据列表
-                }
-            }
-
-        });
-        //分页
-        laypage.render({
-            elem: 'test1'
-            , count: 70 //数据总数，从服务端得到
-            , jump: function (obj, first) {
-                //obj包含了当前分页的所有参数，比如：
-                console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
-                console.log(obj.limit); //得到每页显示的条数
-
-                //首次不执行
-                if (!first) {
-                    //do something
-                }
+            //分页请求字段名称绑定
+            , request: {
+                pageName: 'page',
+                limitName: 'size'
             }
         });
-
+        //搜索人员点击事件
+        $('#searchBtn').click(function () {
+            var value = $('#taskName').val()
+            var type = $('#type').val()
+            if (value === '') {
+                table.reload('tableList', {
+                    url: '/employee/findAll'
+                })
+                return
+            }
+            table.reload('tableList', {
+                url: '/employee/query'
+                , where: {
+                    type: type
+                    , value: value
+                }
+            })
+        });
     });
+
+
 </script>
+</body>
 </html>

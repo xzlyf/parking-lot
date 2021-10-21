@@ -30,8 +30,9 @@ public class EmployeeController {
 
     @GetMapping(value = "/findAll", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object findAll(@RequestParam(value = "page", defaultValue = "1") Integer page) {
-        PageInfo<AdminVo> vo = employeeService.findAll(page);
+    public Object findAll(@RequestParam(value = "page", defaultValue = "1") Integer page,
+                          @RequestParam(value = "size", defaultValue = "10") Integer size) {
+        PageInfo<AdminVo> vo = employeeService.findAll(page, size);
         return ResultPage
                 .ok(vo.getList())
                 .total(vo.getTotal())
@@ -41,5 +42,23 @@ public class EmployeeController {
                 .code(ResultCode.SUCCESS);
     }
 
+    @GetMapping(value = "/query", produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Object findOne(@RequestParam Integer type,
+                          @RequestParam String value) {
+        AdminVo adminVo = null;
+        if (type != null && type == 1) {
+            adminVo = employeeService.queryAdminByEmployeeNo(value);
+        } else if (type != null && type == 2) {
+            adminVo = employeeService.queryAdminByName(value).get(0);
+        }
+        return ResultPage
+                .ok(new Object[]{adminVo})//只有一个对象时需要封装成数组，不然layui不显示
+                .total(1L)
+                .totalPage(1)
+                .currentPage(1)
+                .pageSize(1)
+                .code(ResultCode.SUCCESS);
+    }
 
 }

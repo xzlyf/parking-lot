@@ -15,7 +15,7 @@ public interface EmployeeService {
     /**
      * 返回所有管理员
      */
-    PageInfo<AdminVo> findAll(Integer page);
+    PageInfo<AdminVo> findAll(Integer page, Integer size);
 
     /**
      * 新增管理员
@@ -35,10 +35,10 @@ public interface EmployeeService {
     /**
      * 通过用户名查找管理员
      */
-    List<AdminPo> queryAdminByName(String name);
+    List<AdminVo> queryAdminByName(String name);
 
     /**
      * 通过员工号查找管理员
      */
-    AdminPo queryAdminByEmployeeNo(String employeeNo);
+    AdminVo queryAdminByEmployeeNo(String employeeNo);
 }

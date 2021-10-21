@@ -1,7 +1,7 @@
 package com.xz.parking.shiro;
 
 import com.xz.parking.entity.po.AdminPo;
-import com.xz.parking.service.EmployeeService;
+import com.xz.parking.service.AdminService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class UserRealm extends AuthorizingRealm {
     @Autowired
-    EmployeeService employeeService;
+    AdminService adminService;
 
     /**
      * 授权
@@ -48,8 +48,8 @@ public class UserRealm extends AuthorizingRealm {
         UsernamePasswordToken userToken = (UsernamePasswordToken) authenticationToken;
 
         //查询数据库中的用户
-        AdminPo adminPo = employeeService.queryAdminByEmployeeNo(userToken.getUsername());
-        if (adminPo ==null){
+        AdminPo adminPo = adminService.queryAdminByEmployeeNo(userToken.getUsername());
+        if (adminPo == null) {
             //没有找到管理员
             //抛出UnknownAccountException
             return null;
@@ -57,6 +57,6 @@ public class UserRealm extends AuthorizingRealm {
 
         //密码加密方式：MD5加密，MD5盐值加密
         //密码认证由shiro来做
-        return new SimpleAuthenticationInfo(adminPo, adminPo.getPasswd(),"");
+        return new SimpleAuthenticationInfo(adminPo, adminPo.getPasswd(), "");
     }
 }

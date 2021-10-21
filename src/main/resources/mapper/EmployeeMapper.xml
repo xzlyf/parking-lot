@@ -22,10 +22,10 @@
     <select id="findAll" resultType="com.xz.parking.entity.vo.AdminVo">
         select * from t_admin
     </select>
-    <select id="queryAdminByName" parameterType="String" resultType="com.xz.parking.entity.po.AdminPo">
+    <select id="queryAdminByName" parameterType="String" resultType="com.xz.parking.entity.vo.AdminVo">
         select * from t_admin where name = #{name}
     </select>
-    <select id="queryAdminByEmployeeNo" parameterType="String" resultType="com.xz.parking.entity.po.AdminPo">
+    <select id="queryAdminByEmployeeNo" parameterType="String" resultType="com.xz.parking.entity.vo.AdminVo">
         select * from t_admin where employee_no = #{employeeNo}
     </select>
 </mapper>
