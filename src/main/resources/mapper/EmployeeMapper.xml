@@ -19,25 +19,22 @@
         delete from t_admin where id = #{id}
     </delete>
 
-    <resultMap id="adminMap" type="com.xz.parking.entity.po.AdminPo">
+    <resultMap id="adminMap" type="com.xz.parking.entity.vo.AdminVo">
         <id column="id" property="id"/>
         <result column="employee_no" property="employeeNo"/>
-        <result column="passwd" property="passwd"/>
         <result column="name" property="name"/>
         <result column="is_enable" property="isEnable"/>
         <result column="create_date" property="createDate"/>
         <result column="update_date" property="updateDate"/>
         <collection property="roles" ofType="com.xz.parking.entity.po.RolePo">
-            <result column="r_id" property="id"/>
             <result column="r_desc" property="description"/>
             <result column="r_name" property="name"/>
-            <result column="r_scope" property="scope"/>
         </collection>
     </resultMap>
 
     <!--通过权限中间表查询对应权限-->
     <select id="findAll" resultMap="adminMap">
-        select t.*,r.id as r_id ,r.description as r_desc ,r.name as r_name ,r.`scope` as r_scope
+        select t.* ,r.description as r_desc ,r.name as r_name
         from t_admin t
         left join  admin_role tr on t.id = tr.admin_id
         left join t_role r on tr.role_id =r.id

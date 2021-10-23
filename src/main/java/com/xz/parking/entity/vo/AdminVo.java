@@ -12,6 +12,7 @@ import java.util.Set;
  */
 @Data
 public class AdminVo {
+    private Integer id;
     private String employeeNo;
     private String name;
     private Boolean isEnable;

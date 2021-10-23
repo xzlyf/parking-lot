@@ -43,8 +43,8 @@ spring:
       additional-paths: src/main/java #重启目录
       exclude: WEB-INF/**
   jackson:
-    # 设置属性命名策略,对应jackson下PropertyNamingStrategy中的常量值，SNAKE_CASE-返回的json驼峰式转下划线，json body下划线传到后端自动转驼峰式
-    property-naming-strategy: SNAKE_CASE
+    # 设置属性命名策略, 驼峰转下划线
+    # property-naming-strategy: SNAKE_CASE
     # 全局设置@JsonFormat的格式pattern
     date-format: yyyy-MM-dd
     # 当地时区
@@ -52,7 +52,7 @@ spring:
     # 设置全局时区
     time-zone: GMT+8
     # 常用，全局设置pojo或被@JsonInclude注解的属性的序列化方式
-    default-property-inclusion: ALWAYS #不为空的属性才会序列化,具体属性可看JsonInclude.Include
+    default-property-inclusion: NON_NULL #ALWAYS - 全部字段都显示 ，NON_NULL - 只显示不为空的字段
 
 #分页插件
 pagehelper:

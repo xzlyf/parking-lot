@@ -21,6 +21,9 @@
     <div class="layui-input-inline">
         <button type="button" id="searchBtn" class="layui-btn layui-btn-md">搜索</button>
     </div>
+    <div class="layui-input-inline">
+        <button type="button" id="addUser" class="layui-btn layui-btn-md">新增员工</button>
+    </div>
 </div>
 
 
@@ -45,6 +48,17 @@
             , cols: [[
                 {field: 'employeeNo', title: '编号', sort: true}
                 , {field: 'name', title: '姓名', sort: true}
+                , {
+                    field: 'roles', title: '权限', templet: function (role) {
+                        var roles = role['roles']
+                        var finalSt = ''
+                        for (var i = 0; i < roles.length; i++) {
+                            finalSt = finalSt + roles[i]['name'] + "、"
+                        }
+                        finalSt = finalSt.substr(0,finalSt.length-1);
+                        return finalSt
+                    }
+                }
                 , {field: 'createDate', title: '创建时间', sort: true}
                 , {field: 'updateDate', title: '更新时间', sort: true}
                 , {
@@ -91,6 +105,10 @@
                 }
             })
         });
+        //新增人员
+        $('#addUser').click(function () {
+
+        })
     });
 
 
