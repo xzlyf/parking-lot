@@ -2,6 +2,7 @@ package com.xz.parking.entity.po;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 import java.util.Set;
@@ -32,7 +33,7 @@ import java.util.Set;
  * 管理员表 系统管理者
  */
 @Data
-public class AdminPo {
+public class AdminPo implements Serializable {
     /**
      * 编号
      */
@@ -65,6 +66,6 @@ public class AdminPo {
     /**
      * 角色列表
      */
-    private Set<String> role;
+    private Set<RolePo> roles;
 }
 

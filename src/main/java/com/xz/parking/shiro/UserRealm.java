@@ -35,7 +35,7 @@ public class UserRealm extends AuthorizingRealm {
         AdminPo currentAdminPo = (AdminPo) subject.getPrincipal();
 
         //添加用户拥有的权限进程序
-        info.addStringPermissions(currentAdminPo.getRole());
+        //info.addStringPermissions(currentAdminPo.getRoles());
 
         return info;
     }

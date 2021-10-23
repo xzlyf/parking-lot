@@ -37,7 +37,7 @@ public class Result {
      */
     public static Result failed(Object data) {
         Result r = new Result();
-        r.setCode(ResultCode.SUCCESS);
+        r.setCode(ResultCode.ERROR);
         r.setMsg("failed");
         r.setData(data);
         return r;

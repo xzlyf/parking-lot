@@ -2,7 +2,9 @@ package com.xz.parking.entity.vo;
 
 import lombok.Data;
 
+import javax.management.relation.Role;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * @Author: xz
@@ -13,6 +15,7 @@ public class AdminVo {
     private String employeeNo;
     private String name;
     private Boolean isEnable;
+    private Set<Role> roles;
     private Date createDate;
     private Date updateDate;
 }

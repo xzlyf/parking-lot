@@ -1,6 +1,7 @@
 package com.xz.parking.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.xz.parking.entity.Result;
 import com.xz.parking.entity.ResultCode;
 import com.xz.parking.entity.ResultPage;
 import com.xz.parking.entity.vo.AdminVo;
@@ -52,6 +53,10 @@ public class EmployeeController {
         } else if (type != null && type == 2) {
             adminVo = employeeService.queryAdminByName(value).get(0);
         }
+        if (adminVo==null){
+            return Result.failed(null).msg("暂无数据");
+        }
+
         return ResultPage
                 .ok(new Object[]{adminVo})//只有一个对象时需要封装成数组，不然layui不显示
                 .total(1L)
