@@ -25,6 +25,8 @@
         <result column="passwd" property="passwd"/>
         <result column="name" property="name"/>
         <result column="is_enable" property="isEnable"/>
+        <result column="create_date" property="createDate"/>
+        <result column="update_date" property="updateDate"/>
         <collection property="roles" ofType="com.xz.parking.entity.po.RolePo">
             <result column="r_id" property="id"/>
             <result column="r_desc" property="description"/>

@@ -1,6 +1,5 @@
 package com.xz.parking.entity;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,13 +12,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ResultPage extends Result {
-    @JSONField(ordinal = 3)
     private Long count;
-    @JSONField(ordinal = 4)
     private Integer totalPage;
-    @JSONField(ordinal = 5)
     private Integer currentPage;
-    @JSONField(ordinal = 6)
     private Integer size;
 
     /**

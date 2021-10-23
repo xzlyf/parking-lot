@@ -1,6 +1,5 @@
 package com.xz.parking.entity;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,11 +13,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Result {
     //指定字段顺序
-    @JSONField(ordinal = 1)
     private Integer code;
-    @JSONField(ordinal = 2)
     private String msg;
-    @JSONField(ordinal = 7)
     private Object data;
 
     /**
