@@ -22,6 +22,8 @@ public interface EmployeeService {
      */
     int save(AdminPo adminPo);
 
+    boolean save(String name,Integer[] roleId);
+
     /**
      * 更新管理员
      */

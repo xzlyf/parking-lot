@@ -13,5 +13,5 @@ public class RolePo implements Serializable {
     private Integer id;
     private String description;
     private String name;
-    private Integer scope;
+    private String scope;
 }

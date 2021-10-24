@@ -51,11 +51,14 @@
                 , {
                     field: 'roles', title: '权限', templet: function (role) {
                         var roles = role['roles']
+                        if (roles == null) {
+                            return "未知"
+                        }
                         var finalSt = ''
                         for (var i = 0; i < roles.length; i++) {
                             finalSt = finalSt + roles[i]['name'] + "、"
                         }
-                        finalSt = finalSt.substr(0,finalSt.length-1);
+                        finalSt = finalSt.substr(0, finalSt.length - 1);
                         return finalSt
                     }
                 }

@@ -3,7 +3,8 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xz.parking.dao.EmployeeDao">
-    <insert id="save" parameterType="com.xz.parking.entity.po.AdminPo">
+    <!--返回主键id会自动映射到实体类中，通过实体类(AdminPo)直接getId()即可，这里resultType依然返回操作行数-->
+    <insert id="save" parameterType="com.xz.parking.entity.po.AdminPo" useGeneratedKeys="true" keyProperty="id">
         insert into t_admin(employee_no,passwd,`name`,is_enable) value (#{employeeNo},#{passwd},#{name},#{isEnable})
     </insert>
     <update id="update" parameterType="com.xz.parking.entity.po.AdminPo">
@@ -43,10 +44,18 @@
         select * from t_role where id = #{id}
     </select>
 
-    <select id="queryAdminByName" parameterType="String" resultType="com.xz.parking.entity.vo.AdminVo">
-        select * from t_admin where name = #{name}
+    <select id="queryAdminByName" parameterType="String" resultMap="adminMap">
+        select t.* ,r.description as r_desc ,r.name as r_name
+        from t_admin t
+        left join  admin_role tr on t.id = tr.admin_id
+        left join t_role r on tr.role_id =r.id
+        where t.name = #{name}
     </select>
-    <select id="queryAdminByEmployeeNo" parameterType="String" resultType="com.xz.parking.entity.vo.AdminVo">
-        select * from t_admin where employee_no = #{employeeNo}
+    <select id="queryAdminByEmployeeNo" parameterType="String" resultMap="adminMap">
+        select t.* ,r.description as r_desc ,r.name as r_name
+        from t_admin t
+        left join  admin_role tr on t.id = tr.admin_id
+        left join t_role r on tr.role_id =r.id
+        where t.employee_no = #{employeeNo}
     </select>
 </mapper>

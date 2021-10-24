@@ -8,10 +8,9 @@ import com.xz.parking.entity.vo.AdminVo;
 import com.xz.parking.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
 
 /**
  * @Author: xz
@@ -53,7 +52,7 @@ public class EmployeeController {
         } else if (type != null && type == 2) {
             adminVo = employeeService.queryAdminByName(value).get(0);
         }
-        if (adminVo==null){
+        if (adminVo == null) {
             return Result.failed(null).msg("暂无数据");
         }
 
@@ -65,5 +64,18 @@ public class EmployeeController {
                 .pageSize(1)
                 .code(ResultCode.SUCCESS);
     }
+
+    @PostMapping("/add")
+    @ResponseBody
+    public Object addOne(@RequestParam String name,
+                         @RequestParam Integer[] roleId) {
+        if (employeeService.save(name, roleId)) {
+            return Result.ok(null).msg("添加成功");
+        } else {
+            return Result.failed(null).msg("添加失败");
+        }
+    }
+
+    //todo 研究mysql联级删除，删除admin自动删除中间表
 
 }
