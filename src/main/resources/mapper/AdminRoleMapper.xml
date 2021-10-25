@@ -14,4 +14,10 @@
     <delete id="deleteById">
         delete from admin_role where id = #{id}
     </delete>
+    <delete id="deleteByAdminId">
+        delete from admin_role where admin_id in
+        <foreach collection="list" item="id"  open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

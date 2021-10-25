@@ -16,7 +16,7 @@ public interface RoleDao {
     /**
      * 返回所有权限
      */
-    List<AdminVo> findAll();
+    List<RolePo> findAll();
 
     /**
      * 新增权限

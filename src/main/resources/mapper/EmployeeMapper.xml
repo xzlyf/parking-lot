@@ -17,7 +17,10 @@
         where id = #{id}
     </update>
     <delete id="deleteById">
-        delete from t_admin where id = #{id}
+        delete from t_admin where id in
+        <foreach collection="list" item="id"  open="(" close=")" separator=",">
+            #{id}
+        </foreach>
     </delete>
 
     <resultMap id="adminMap" type="com.xz.parking.entity.vo.AdminVo">

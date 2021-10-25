@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @Author: xz
@@ -68,7 +69,7 @@ public class EmployeeController {
     @PostMapping("/add")
     @ResponseBody
     public Object addOne(@RequestParam String name,
-                         @RequestParam Integer[] roleId) {
+                         @RequestParam(required = false) Integer[] roleId) {
         if (employeeService.save(name, roleId)) {
             return Result.ok(null).msg("添加成功");
         } else {
@@ -76,6 +77,10 @@ public class EmployeeController {
         }
     }
 
-    //todo 研究mysql联级删除，删除admin自动删除中间表
-
+    @GetMapping("/delete")
+    @ResponseBody
+    public Object deleteMore(@RequestParam List<Integer> id){
+        int row = employeeService.deleteById(id);
+        return Result.ok(row).msg("操作成功");
+    }
 }

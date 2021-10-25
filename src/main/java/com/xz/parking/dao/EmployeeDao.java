@@ -3,6 +3,7 @@ package com.xz.parking.dao;
 import com.xz.parking.entity.po.AdminPo;
 import com.xz.parking.entity.vo.AdminVo;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ public interface EmployeeDao {
     /**
      * 根据id删除管理员
      */
-    int deleteById(Integer id);
+    int deleteById(List<Integer> id);
 
     /**
      * 通过用户名查找管理员

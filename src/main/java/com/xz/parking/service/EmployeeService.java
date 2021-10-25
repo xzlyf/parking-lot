@@ -22,7 +22,7 @@ public interface EmployeeService {
      */
     int save(AdminPo adminPo);
 
-    boolean save(String name,Integer[] roleId);
+    boolean save(String name, Integer[] roleId);
 
     /**
      * 更新管理员
@@ -32,7 +32,7 @@ public interface EmployeeService {
     /**
      * 根据id删除管理员
      */
-    int deleteById(Integer id);
+    int deleteById(List<Integer> ids);
 
     /**
      * 通过用户名查找管理员

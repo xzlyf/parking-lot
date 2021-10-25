@@ -14,4 +14,6 @@ public interface AdminRoleDao {
     Integer insert(List<AdminRolePo> list);
 
     Integer deleteById(Integer id);
+
+    Integer deleteByAdminId(List<Integer> id);
 }

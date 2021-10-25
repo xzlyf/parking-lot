@@ -64,17 +64,20 @@ public class EmployeeServiceImpl implements EmployeeService {
 
             List<AdminRolePo> adminRolePos = new ArrayList<>();
             Set<RolePo> roles = new HashSet<>();
-            RolePo role;
-            for (Integer id : roleId) {
-                role = roleDao.findById(id);
-                if (role != null) {
-                    roles.add(role);
-                    adminRolePos.add(new AdminRolePo(adminPo.getId(), role.getId()));
+            if (roleId != null) {
+                RolePo role;
+                for (Integer id : roleId) {
+                    role = roleDao.findById(id);
+                    if (role != null) {
+                        roles.add(role);
+                        adminRolePos.add(new AdminRolePo(adminPo.getId(), role.getId()));
+                    }
                 }
+                adminRoleDao.insert(adminRolePos);
             }
-            adminRoleDao.insert(adminRolePos);
             adminPo.setRoles(roles);
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
         return true;
@@ -86,8 +89,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public int deleteById(Integer id) {
-        return employeeDao.deleteById(id);
+    public int deleteById(List<Integer> ids) {
+        int row;
+        adminRoleDao.deleteByAdminId(ids);
+        row = employeeDao.deleteById(ids);
+        return row;
     }
 
     @Override
