@@ -1,19 +1,34 @@
 package com.xz.parking;
 
+import com.google.gson.Gson;
+import com.xz.parking.dao.MenuDao;
+import com.xz.parking.entity.po.MenuPo;
 import com.xz.parking.service.AdminService;
 import com.xz.parking.service.impl.AdminServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 @SpringBootTest
 class ParkingApplicationTests {
 
+    @Autowired
+    MenuDao menuDao;
 
     @Test
     void contextLoads() {
+        List<String> perms = new ArrayList<>();
+        perms.add("ADMIN");
+        perms.add("EMPL");
+        //权限返回资源 关键字：find_in_set
+        //关键sql ： select * from t_menu m where find_in_set('EMPL',`scope`) or find_in_set('USER',`scope`)
+        List<MenuPo> menu = menuDao.getMenu(perms);
+        Gson gson = new Gson();
+        System.out.println(gson.toJson(menu));
     }
 
 

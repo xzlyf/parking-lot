@@ -1,6 +1,11 @@
 package com.xz.parking.entity.po;
 
+import com.xz.parking.dao.AdminDao;
 import lombok.Data;
+
+import java.awt.*;
+import java.util.List;
+
 
 /**
  * @Author: xz
@@ -15,7 +20,7 @@ public class MenuPo {
     /**
      * 菜单父id
      */
-    private Integer parentId;
+    private Integer pid;
     /**
      * 菜单名字
      */
@@ -24,4 +29,11 @@ public class MenuPo {
      * 菜单url
      */
     private String url;
+
+    /**
+     * 子菜单
+     */
+    private List<Menu> child;
+
+
 }

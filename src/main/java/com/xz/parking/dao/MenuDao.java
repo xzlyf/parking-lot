@@ -11,5 +11,5 @@ import java.util.List;
  */
 @Repository
 public interface MenuDao {
-    List<MenuPo> getMenu(String[] perms);
+    List<MenuPo> getMenu(List<String> perms);
 }

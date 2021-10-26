@@ -3,7 +3,23 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xz.parking.dao.MenuDao">
-    <select id="getMenu" resultType="com.xz.parking.entity.po.MenuPo">
 
+    <!--封装成菜单对象-->
+    <resultMap id="menuTree" type="com.xz.parking.entity.po.MenuPo">
+        <id column="id" property="id"/>
+        <result column="pid" property="pid"/>
+        <result column="name" property="name"/>
+        <result column="url" property="url"/>
+        <collection column="id" property="child" ofType="com.xz.parking.entity.po.MenuPo"
+                    select="getMenuChild"/>
+
+    </resultMap>
+    <!-- 先查询菜单根级目录 -->
+    <select id="getMenu" resultMap="menuTree">
+        select * from t_menu where pid = 0
+    </select>
+    <!--再根据根菜单的id查询子菜单-->
+    <select id="getMenuChild" resultMap="menuTree">
+        select * from t_menu where pid = #{id}
     </select>
 </mapper>
