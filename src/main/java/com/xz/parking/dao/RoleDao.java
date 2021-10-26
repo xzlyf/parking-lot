@@ -35,6 +35,7 @@ public interface RoleDao {
 
     /**
      * 根据id查找
+     * @param id 权限id
      */
     RolePo findById(Integer id);
 }

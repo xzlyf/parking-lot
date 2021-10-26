@@ -3,7 +3,6 @@ package com.xz.parking.dao;
 import com.xz.parking.entity.po.AdminPo;
 import com.xz.parking.entity.vo.AdminVo;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -25,13 +25,12 @@
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item layui-hide layui-show-md-inline-block">
                 <a href="javascript:;">
-                    <img src="//tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
-                         class="layui-nav-img">
-                    tester
+                    <img src="../static/img/avatar.jpg" class="layui-nav-img">
+                    <span th:text="${user.getName()}">tester</span>
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="">账户管理</a></dd>
-                    <dd><a href="">退出登录</a></dd>
+                    <dd><a href="/login/logout">退出登录</a></dd>
                 </dl>
             </li>
         </ul>

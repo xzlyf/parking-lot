@@ -1,6 +1,8 @@
 package com.xz.parking.shiro;
 
 import com.xz.parking.entity.po.AdminPo;
+import com.xz.parking.entity.po.RolePo;
+import com.xz.parking.entity.vo.AdminVo;
 import com.xz.parking.service.AdminService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -9,7 +11,10 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Set;
 
 /**
  * @Author: xz
@@ -27,16 +32,24 @@ public class UserRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
         //读取权限表，赋予用户权限
-        //info.addStringPermission("all");//指定权限名
+        //info.addStringPermission("ADMIN");//指定权限名
 
         //拿到当前登录的对象
         Subject subject = SecurityUtils.getSubject();
         //通过下面方法return new SimpleAuthenticationInfo(admin,admin.getPasswd(),"");中的第一个参数（principal）接收传入的管理员对象
         AdminPo currentAdminPo = (AdminPo) subject.getPrincipal();
-
+        Set<RolePo> roles = currentAdminPo.getRoles();
         //添加用户拥有的权限进程序
-        //info.addStringPermissions(currentAdminPo.getRoles());
+        if (roles != null) {
+            for (RolePo role : roles) {
+                info.addStringPermission(role.getScope());
+            }
+        }
 
+        //把用户信息过滤后传入session，给业务层调用
+        AdminVo adminVo = new AdminVo();
+        BeanUtils.copyProperties(currentAdminPo, adminVo);
+        SecurityUtils.getSubject().getSession().setAttribute("user", adminVo);
         return info;
     }
 

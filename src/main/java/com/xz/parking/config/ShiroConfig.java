@@ -34,8 +34,7 @@ public class ShiroConfig {
          */
         Map<String, String> filterMap = new LinkedHashMap<>();
         filterMap.put("/login/*","anon");
-        filterMap.put("/console/*","authc");
-        //filterMap.put("/admin/*","perms[all]");//标识带有all标识的管理员才能进行访问
+        filterMap.put("/console/*","perms[ADMIN]");//标识带有all标识的管理员才能进行访问
         bean.setFilterChainDefinitionMap(filterMap);
 
         //设置登录的页面
