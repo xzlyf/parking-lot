@@ -33,8 +33,9 @@ public class ShiroConfig {
             role:拥有某个角色权限才能访问
          */
         Map<String, String> filterMap = new LinkedHashMap<>();
-        filterMap.put("/login/*","anon");
-        filterMap.put("/console/*","perms[ADMIN]");//标识带有all标识的管理员才能进行访问
+        filterMap.put("/login/**","anon");
+        //自定义过滤器，做好多权限可以访问同一资源
+        filterMap.put("/console/**","perms[ADMIN]");
         bean.setFilterChainDefinitionMap(filterMap);
 
         //设置登录的页面

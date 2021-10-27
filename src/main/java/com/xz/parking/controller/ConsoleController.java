@@ -28,7 +28,10 @@ public class ConsoleController {
         ModelAndView modelAndView = new ModelAndView();
         AdminVo admin = (AdminVo) SecurityUtils.getSubject().getSession().getAttribute("user");
         ScopeDto scope = (ScopeDto) SecurityUtils.getSubject().getSession().getAttribute("scope");
-        List<MenuPo> menu = menuDao.getMenuByPerms(scope.getScope());
+        List<MenuPo> menu = null;
+        if (scope != null) {
+            menu = menuDao.getMenuByPerms(scope.getScope());
+        }
         modelAndView.setViewName("console");
         modelAndView.addObject("user", admin);
         modelAndView.addObject("menuList", menu);
