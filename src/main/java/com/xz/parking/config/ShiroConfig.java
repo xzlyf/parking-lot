@@ -1,5 +1,6 @@
 package com.xz.parking.config;
 
+import com.xz.parking.shiro.RoleOrFilter;
 import com.xz.parking.shiro.UserRealm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.servlet.Filter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -34,9 +36,17 @@ public class ShiroConfig {
          */
         Map<String, String> filterMap = new LinkedHashMap<>();
         filterMap.put("/login/**","anon");
-        //自定义过滤器，做好多权限可以访问同一资源
-        filterMap.put("/console/**","perms[ADMIN]");
+        //自定义过滤器，满足任意一权限都可访问，使用|分割权限
+        filterMap.put("/console/**","e-perms[ADMIN|EMPL]");
+        filterMap.put("/employee/**","e-perms[ADMIN]");
+        filterMap.put("/role/**","e-perms[ADMIN]");
+
         bean.setFilterChainDefinitionMap(filterMap);
+
+        //设置自定义filter---
+        Map<String, Filter> filtersMap = new LinkedHashMap<>();
+        filtersMap.put("e-perms",new RoleOrFilter());//可以配置RoleOrFilter的Bean
+        bean.setFilters(filtersMap);
 
         //设置登录的页面
         bean.setLoginUrl("/login/index");
