@@ -23,16 +23,15 @@ public class ConsoleController {
     @Autowired
     private MenuDao menuDao;
 
-    @GetMapping("/to_console")
+    @GetMapping("/index")
     public ModelAndView toConsole() {
         ModelAndView modelAndView = new ModelAndView();
         AdminVo admin = (AdminVo) SecurityUtils.getSubject().getSession().getAttribute("user");
         ScopeDto scope = (ScopeDto) SecurityUtils.getSubject().getSession().getAttribute("scope");
-        List<MenuPo> menu = menuDao.getMenu(scope.getScope());
+        List<MenuPo> menu = menuDao.getMenuByPerms(scope.getScope());
         modelAndView.setViewName("console");
         modelAndView.addObject("user", admin);
         modelAndView.addObject("menuList", menu);
-        System.out.println("控制面板：" + menu.toString());
         return modelAndView;
     }
 

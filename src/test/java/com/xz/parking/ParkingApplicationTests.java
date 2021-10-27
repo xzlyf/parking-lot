@@ -22,11 +22,9 @@ class ParkingApplicationTests {
     @Test
     void contextLoads() {
         List<String> perms = new ArrayList<>();
-        perms.add("ADMIN");
         perms.add("EMPL");
-        //权限返回资源 关键字：find_in_set
-        //关键sql ： select * from t_menu m where find_in_set('EMPL',`scope`) or find_in_set('USER',`scope`)
-        List<MenuPo> menu = menuDao.getMenu(perms);
+        perms.add("USER");
+        List<MenuPo> menu = menuDao.getMenuByPerms(perms);
         Gson gson = new Gson();
         System.out.println(gson.toJson(menu));
     }

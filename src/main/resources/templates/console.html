@@ -3,23 +3,21 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script type="text/javascript" src="../static/js/jquery-3.5.1.min.js"></script>
     <title>管理系统</title>
     <link rel="stylesheet" href="../static/layui/css/layui.css ">
 </head>
 <body>
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo layui-hide-xs layui-bg-black">停车场管理系统</div>
-        <!-- 头部区域（可配合layui 已有的水平导航） -->
+        <div class="layui-logo layui-hide-xs layui-bg-black" style="user-select:none;">停车场管理系统</div>
+        <!-- 头部区域 -->
         <ul class="layui-nav layui-layout-left">
             <!-- 移动端显示 -->
             <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-header-event="menuLeft">
                 <i class="layui-icon layui-icon-spread-left"></i>
             </li>
 
-            <li class="layui-nav-item layui-hide-xs"><a href="">nav 1</a></li>
-            <li class="layui-nav-item layui-hide-xs"><a href="">nav 2</a></li>
-            <li class="layui-nav-item layui-hide-xs"><a href="">nav 3</a></li>
 
         </ul>
         <ul class="layui-nav layui-layout-right">
@@ -38,38 +36,19 @@
 
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
-            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                <li class="layui-nav-item layui-nav-itemed">
-                    <a class="" href="javascript:;">系统管理</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">员工管理</a></dd>
-                        <dd><a href="javascript:;">权限管理</a></dd>
-                        <dd><a href="javascript:;">系统配置</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;">财务管理</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">财务状况</a></dd>
-                        <dd><a href="javascript:;">订单管理</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;">停车场管理</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">停车记录</a></dd>
-                        <dd><a href="javascript:;">黑名单</a></dd>
-                        <dd><a href="javascript:;">白名单</a></dd>
-                        <dd><a href="javascript:;">设备管理</a></dd>
-                        <dd><a href="javascript:;">区域管理</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;">系统监控</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">实时数据</a></dd>
-                        <dd><a href="javascript:;">日志监控</a></dd>
+            <!-- 左侧导航区域 -->
+            <ul id="menuList" class="layui-nav layui-nav-tree" lay-filter="leftNav">
+                <li class="layui-nav-item" th:each="menuPo:${menuList}">
+                    <a class="" href="javascript:;" th:text="${menuPo.name}"></a>
+                    <dl class="layui-nav-child" th:each="child:${menuPo.child}">
+                        <!--如果当前索引为0，就选中第一个菜单的第一个子菜单-->
+                        <dd th:if="${childStat.index} eq 0 and ${menuPoStat.index} eq 0" class="layui-this">
+                            <a th:value="${child.url}" th:text="${child.name}"></a>
+                        </dd>
+                        <!--索引不等于0显示就普通显示，补选中-->
+                        <dd th:if="${childStat.index} ne 0">
+                            <a th:value="${child.url}" th:text="${child.name}"></a>
+                        </dd>
                     </dl>
                 </li>
             </ul>
@@ -78,7 +57,10 @@
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <div style="padding: 15px;">内容主体区域。记得修改 layui.css 和 js 的路径</div>
+        <iframe id="modularpage" width="100%" height="100%" class="layadmin-iframe"
+                th:src="${menuList.get(0).child.get(0).url}">
+        </iframe>
+
     </div>
 
     <div class="layui-footer">
@@ -90,11 +72,11 @@
 <script src="../static/layui/layui.js"></script>
 
 <script>
-    //JS
-    layui.use(['element', 'layer', 'util'], function () {
-        var element = layui.element
-            , layer = layui.layer
+    layui.use(['element', 'layer', 'util', 'dropdown'], function () {
+        var layer = layui.layer
             , util = layui.util
+            , dropdown = layui.dropdown
+            , element = layui.element
             , $ = layui.$;
 
         //头部事件
@@ -113,9 +95,27 @@
                     , shadeClose: true
                 });
             }
-        });
 
+        });
+        // 切块导航
+        element.on("nav(leftNav)", function (data) {
+            console.log(data)
+            var url = $(this).attr("value");
+            console.log(url)
+            //得到a标签的href值,传入iframe
+            $('#modularpage').attr('src', url)
+        });
+        
+        $('.layui-logo').click(function () {
+            window.location.reload()
+        })
     });
+
+    //默认展开菜单第一个菜单,并选中第一个页面
+    $('#menuList')
+        .children(":first")
+        .addClass("layui-nav-itemed")
+
 </script>
 </body>
 </html>

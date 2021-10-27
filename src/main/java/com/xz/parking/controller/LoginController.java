@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/login")
 public class LoginController {
-    @GetMapping("/to_login")
+    @GetMapping("/index")
     public String toLogin() {
         return "login";
     }
@@ -30,11 +30,11 @@ public class LoginController {
 
         try {
             subject.login(token);
-            return "redirect:/console/to_console";
+            return "redirect:/console/index";
         } catch (UnknownAccountException e) {
             e.printStackTrace();
         }
-        return "redirect:/login/to_login";
+        return "redirect:/login/index";
     }
 
     @GetMapping("/logout")
@@ -42,7 +42,7 @@ public class LoginController {
         //获取当前用户
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
-        return "redirect:/login/to_login";
+        return "redirect:/login/index";
     }
 
     @GetMapping("/denied")

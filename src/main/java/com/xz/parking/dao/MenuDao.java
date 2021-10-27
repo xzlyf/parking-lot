@@ -11,5 +11,13 @@ import java.util.List;
  */
 @Repository
 public interface MenuDao {
-    List<MenuPo> getMenu(List<String> perms);
+    /**
+     * 无需权限返回所有菜单
+     */
+    List<MenuPo> getMenu();
+
+    /**
+     * 根据权限返回所属菜单
+     */
+    List<MenuPo> getMenuByPerms(List<String> perms);
 }

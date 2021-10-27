@@ -11,15 +11,35 @@
         <result column="name" property="name"/>
         <result column="url" property="url"/>
         <collection column="id" property="child" ofType="com.xz.parking.entity.po.MenuPo"
-                    select="getMenuChild"/>
+                    select="getMenuChild" columnPrefix=""/>
 
     </resultMap>
     <!-- 先查询菜单根级目录 -->
     <select id="getMenu" resultMap="menuTree">
         select * from t_menu where pid = 0
     </select>
+
     <!--再根据根菜单的id查询子菜单-->
     <select id="getMenuChild" resultMap="menuTree">
         select * from t_menu where pid = #{id}
     </select>
+
+    <!--查询根菜单 使用sql二次查询和find_in_set进行查找关键字-->
+    <!--如果传入的用户权限为空则不返回菜单资源-->
+    <select id="getMenuByPerms" resultMap="menuTree">
+        select * from
+        <if test="perms==null or perms.size()==0">
+            t_menu where id = 0
+        </if>
+        <if test="perms!=null and perms.size()!=0 ">
+            (select * from t_menu m where pid = 0) root
+            <where>
+                <foreach collection="list" item="item" separator="or">
+                    find_in_set(#{item},root.`scope`)
+                </foreach>
+            </where>
+        </if>
+
+    </select>
+
 </mapper>

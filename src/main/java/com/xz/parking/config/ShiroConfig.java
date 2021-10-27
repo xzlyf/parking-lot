@@ -38,7 +38,7 @@ public class ShiroConfig {
         bean.setFilterChainDefinitionMap(filterMap);
 
         //设置登录的页面
-        bean.setLoginUrl("/login/to_login");
+        bean.setLoginUrl("/login/index");
         //未授权页面
         bean.setUnauthorizedUrl("/login/denied");
 
