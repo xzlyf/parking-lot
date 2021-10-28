@@ -4,6 +4,7 @@ import com.xz.parking.dao.AdminDao;
 import lombok.Data;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.List;
 
 
@@ -12,7 +13,7 @@ import java.util.List;
  * @Date: 2021/10/26
  */
 @Data
-public class MenuPo {
+public class MenuPo implements Serializable {
     /**
      * 菜单id
      */

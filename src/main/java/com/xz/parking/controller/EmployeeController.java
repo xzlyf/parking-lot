@@ -4,11 +4,15 @@ import com.github.pagehelper.PageInfo;
 import com.xz.parking.entity.Result;
 import com.xz.parking.entity.ResultCode;
 import com.xz.parking.entity.ResultPage;
+import com.xz.parking.entity.vo.AdminAddVo;
 import com.xz.parking.entity.vo.AdminVo;
+import com.xz.parking.entity.vo.RoleVo;
 import com.xz.parking.service.EmployeeService;
+import com.xz.parking.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -19,12 +23,24 @@ import java.util.List;
 @Controller
 @RequestMapping("/employee")
 public class EmployeeController {
+
     @Autowired
     EmployeeService employeeService;
+    @Autowired
+    RoleService roleService;
 
     @GetMapping("/index")
     public String toEmployee() {
         return "system/employee";
+    }
+
+    @GetMapping("/index_add")
+    public ModelAndView toAdd() {
+        ModelAndView modelAndView = new ModelAndView();
+        List<RoleVo> all = roleService.findAll();
+        modelAndView.addObject("roles", all);
+        modelAndView.setViewName("system/employee_add");
+        return modelAndView;
     }
 
 
@@ -67,9 +83,8 @@ public class EmployeeController {
 
     @PostMapping("/add")
     @ResponseBody
-    public Object addOne(@RequestParam String name,
-                         @RequestParam(required = false) Integer[] roleId) {
-        if (employeeService.save(name, roleId)) {
+    public Object addOne(AdminAddVo addVo) {
+        if (employeeService.save(addVo.getUsername(), addVo.getPerms())) {
             return Result.ok(null).msg("添加成功");
         } else {
             return Result.failed(null).msg("添加失败");
@@ -78,7 +93,7 @@ public class EmployeeController {
 
     @GetMapping("/delete")
     @ResponseBody
-    public Object deleteMore(@RequestParam List<Integer> id){
+    public Object deleteMore(@RequestParam List<Integer> id) {
         int row = employeeService.deleteById(id);
         return Result.ok(row).msg("操作成功");
     }

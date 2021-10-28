@@ -60,7 +60,8 @@
         <iframe id="modularpage" width="100%" height="100%" class="layadmin-iframe"
                 th:src="${menuList.get(0).child.get(0).url}">
         </iframe>
-
+        <!-- 辅助元素，遮罩层，用于显示切换子页面的加载动画-->
+        <div class="layadmin-body-shade" layadmin-event="shade"></div>
     </div>
 
     <div class="layui-footer">
@@ -99,22 +100,37 @@
         });
         // 切块导航
         element.on("nav(leftNav)", function (data) {
-            console.log(data)
             var url = $(this).attr("value");
-            console.log(url)
             //得到a标签的href值,传入iframe
-            $('#modularpage').attr('src', url)
+            showChilePage(url)
         });
-        
+        //点击logo事件
         $('.layui-logo').click(function () {
             window.location.reload()
         })
     });
 
+    //显示子页面
+    function showChilePage(url) {
+        $('#modularpage').attr('src', url)
+        layer.load();       //在父窗口上加载等待层
+    }
+
     //默认展开菜单第一个菜单,并选中第一个页面
     $('#menuList')
         .children(":first")
         .addClass("layui-nav-itemed")
+
+    //iframe加载完成监听
+    var oFrm = document.getElementById('modularpage');
+    oFrm.onload = oFrm.onreadystatechange = function () {
+        if (this.readyState && this.readyState != 'complete') return;
+        else {
+            //加载完成
+            // 加载完成后取消加载动画
+            layer.closeAll()
+        }
+    }
 
 </script>
 </body>
