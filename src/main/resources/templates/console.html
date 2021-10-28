@@ -100,9 +100,11 @@
         });
         // 切块导航
         element.on("nav(leftNav)", function (data) {
-            var url = $(this).attr("value");
             //得到a标签的href值,传入iframe
-            showChilePage(url)
+            var url = $(this).attr("value");
+            if (url !== undefined) {
+                showChilePage(url)
+            }
         });
         //点击logo事件
         $('.layui-logo').click(function () {

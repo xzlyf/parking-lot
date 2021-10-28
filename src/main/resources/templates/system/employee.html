@@ -111,15 +111,7 @@
                     layer.close(index);
                 });
             } else if (obj.event === 'edit') {
-                layer.prompt({
-                    formType: 3
-                    , value: data.name
-                }, function (value, index) {
-                    obj.update({
-                        email: value
-                    });
-                    layer.close(index);
-                });
+                parent.showChilePage("/employee/index_update?employeeNo="+data.employeeNo)
             }
         });
         //搜索人员点击事件

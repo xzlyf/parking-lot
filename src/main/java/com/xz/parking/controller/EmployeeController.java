@@ -43,6 +43,17 @@ public class EmployeeController {
         return modelAndView;
     }
 
+    @GetMapping("/index_update")
+    public ModelAndView toUpdate(@RequestParam String employeeNo) {
+        ModelAndView modelAndView = new ModelAndView();
+        List<RoleVo> all = roleService.findAll();
+        modelAndView.addObject("roles", all);
+        AdminVo adminVo = employeeService.queryAdminByEmployeeNo(employeeNo);
+        modelAndView.addObject("user", adminVo);
+        modelAndView.setViewName("system/employee_update");
+        return modelAndView;
+    }
+
 
     @GetMapping(value = "/findAll", produces = "application/json;charset=UTF-8")
     @ResponseBody
