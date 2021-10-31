@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <script type="text/javascript" src="../../static/js/jquery-3.5.1.min.js"></script>
     <link rel="stylesheet" href="../../static/layui/css/layui.css ">
-    <title>新增员工</title>
+    <title>编辑员工</title>
 
 </head>
 <body>
@@ -21,24 +21,28 @@
         <legend>员工信息</legend>
     </fieldset>
     <div class="layui-form-item">
+        <label class="layui-form-label">启用账号</label>
+        <div class="layui-input-block">
+            <input id="isEnable" type="checkbox" name="isEnable" lay-skin="switch" lay-text="ON|OFF">
+        </div>
+    </div>
+    <div class="layui-form-item">
         <label class="layui-form-label">姓名</label>
         <div class="layui-input-inline">
-            <input id="username" type="text" name="username" lay-verify="required" lay-reqtext="姓名必填项" placeholder="请输入"
+            <input id="name" type="text" name="name" lay-verify="required" lay-reqtext="姓名必填项" placeholder="请输入"
                    autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">密码</label>
         <div class="layui-input-inline">
-            <input id="passwd" type="text" name="passwd" lay-verify="required" lay-reqtext="密码"
-                   placeholder="请输入" autocomplete="off" class="layui-input">
+            <input id="passwd" type="text" name="passwd" placeholder="请输入" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">电话</label>
         <div class="layui-input-inline">
-            <input id="tel" type="tel" name="phone" lay-verify="required|phone"
-                   lay-reqtext="请输入正确的手机号" placeholder="请输入"
+            <input id="tel" type="tel" name="phone" placeholder="请输入"
                    autocomplete="off" class="layui-input">
         </div>
     </div>
@@ -70,12 +74,13 @@
                 data: data.field,
                 dataType: 'json',
                 success: function (res) {
-                    if (res.code === 200) {
-                        //刷新父类页面
-                        parent.location.reload();
-                    } else {
-                        layer.msg('修改失败，请稍后重试')
-                    }
+                    console.log(res)
+                    // if (res.code === 200) {
+                    //     //刷新父类页面
+                    //     parent.location.reload();
+                    // } else {
+                    //     layer.msg('修改失败，请稍后重试')
+                    // }
                 },
                 error: function (ex) {
                     layer.msg('操作失败')
@@ -101,7 +106,8 @@
                 }
                 var user = res.data[0]
                 //渲染用户数据
-                $('#username').attr('value', user.name)
+                $('#name').attr('value', user.name)
+                $('#isEnable').prop("checked", user.isEnable)
                 //把用户权限给选择上，这里写的要有点复杂
                 //role_name把权限名字给取出来
                 //params把参数拼接上，不知为何直接写在jquery里会出问题，只能出此下策

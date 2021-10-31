@@ -5,11 +5,11 @@ import com.xz.parking.entity.Result;
 import com.xz.parking.entity.ResultCode;
 import com.xz.parking.entity.ResultPage;
 import com.xz.parking.entity.vo.AdminAddVo;
+import com.xz.parking.entity.vo.AdminUpdateVo;
 import com.xz.parking.entity.vo.AdminVo;
 import com.xz.parking.entity.vo.RoleVo;
 import com.xz.parking.service.EmployeeService;
 import com.xz.parking.service.RoleService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -96,11 +96,19 @@ public class EmployeeController {
     @PostMapping("/add")
     @ResponseBody
     public Object addOne(AdminAddVo addVo) {
-        if (employeeService.save(addVo.getUsername(), addVo.getPerms())) {
+        if (employeeService.save(addVo.getName(), addVo.getPerms())) {
             return Result.ok(null).msg("添加成功");
         } else {
             return Result.failed(null).msg("添加失败");
         }
+    }
+
+    @PostMapping("/update")
+    @ResponseBody
+    public Object updateOne(AdminUpdateVo updateVo) {
+        System.out.println("============="+updateVo.toString());
+        //todo 待完成用户更新操作
+        return Result.ok(null).msg("添加成功");
     }
 
     @GetMapping("/delete")

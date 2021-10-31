@@ -8,7 +8,8 @@ import lombok.Data;
  * 注册管理员前端传入的实体类
  */
 @Data
-public class AdminAddVo {
+public class AdminUpdateVo {
+    private Boolean isEnable;
     private String name;
     private String passwd;
     private String phone;
