@@ -9,6 +9,7 @@ import com.xz.parking.entity.vo.AdminVo;
 import com.xz.parking.entity.vo.RoleVo;
 import com.xz.parking.service.EmployeeService;
 import com.xz.parking.service.RoleService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -46,9 +47,9 @@ public class EmployeeController {
     @GetMapping("/index_update")
     public ModelAndView toUpdate(@RequestParam String employeeNo) {
         ModelAndView modelAndView = new ModelAndView();
-        List<RoleVo> all = roleService.findAll();
-        modelAndView.addObject("roles", all);
+        List<RoleVo> roles = roleService.findAll();
         AdminVo adminVo = employeeService.queryAdminByEmployeeNo(employeeNo);
+        modelAndView.addObject("roles", roles);
         modelAndView.addObject("user", adminVo);
         modelAndView.setViewName("system/employee_update");
         return modelAndView;
@@ -108,4 +109,6 @@ public class EmployeeController {
         int row = employeeService.deleteById(id);
         return Result.ok(row).msg("操作成功");
     }
+
+
 }
