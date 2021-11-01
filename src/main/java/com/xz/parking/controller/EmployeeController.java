@@ -106,9 +106,12 @@ public class EmployeeController {
     @PostMapping("/update")
     @ResponseBody
     public Object updateOne(AdminUpdateVo updateVo) {
-        System.out.println("============="+updateVo.toString());
-        //todo 待完成用户更新操作
-        return Result.ok(null).msg("添加成功");
+        int update = employeeService.update(updateVo);
+        if (update != 0) {
+            return Result.ok(null).msg("更新成功");
+        } else {
+            return Result.failed(null).msg("更新失败");
+        }
     }
 
     @GetMapping("/delete")

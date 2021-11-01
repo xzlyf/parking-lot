@@ -2,6 +2,7 @@ package com.xz.parking.service;
 
 import com.github.pagehelper.PageInfo;
 import com.xz.parking.entity.po.AdminPo;
+import com.xz.parking.entity.vo.AdminUpdateVo;
 import com.xz.parking.entity.vo.AdminVo;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public interface EmployeeService {
     /**
      * 更新管理员
      */
-    int update(AdminPo adminPo);
+    int update(AdminUpdateVo updateVo);
 
     /**
      * 根据id删除管理员

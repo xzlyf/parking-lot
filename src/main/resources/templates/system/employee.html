@@ -55,6 +55,7 @@
             , method: 'get'  //提交方式
             , cols: [[
                 {type: 'checkbox', fixed: 'left'}
+                , {type: 'space', field: 'id', hide: true}
                 , {field: 'employeeNo', title: '编号', sort: true, width: 100}
                 , {field: 'name', title: '姓名', sort: true, width: 100}
                 , {
@@ -111,7 +112,7 @@
                     layer.close(index);
                 });
             } else if (obj.event === 'edit') {
-                parent.showChilePage("/employee/index_update?employeeNo="+data.employeeNo)
+                parent.showChilePage("/employee/index_update?employeeNo=" + data.employeeNo)
             }
         });
         //搜索人员点击事件

@@ -37,7 +37,7 @@ public class AdminPo implements Serializable {
     /**
      * 编号
      */
-    private int id;
+    private Integer id;
     /**
      * 人员编号 当前用户ID
      */

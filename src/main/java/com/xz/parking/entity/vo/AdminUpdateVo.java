@@ -9,9 +9,9 @@ import lombok.Data;
  */
 @Data
 public class AdminUpdateVo {
+    private Integer id;
     private Boolean isEnable;
     private String name;
     private String passwd;
-    private String phone;
     private Integer[] perms;
 }

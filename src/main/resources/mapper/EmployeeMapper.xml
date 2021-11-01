@@ -10,9 +10,9 @@
     <update id="update" parameterType="com.xz.parking.entity.po.AdminPo">
         update t_admin
         <set>
-            <if test="name!=null">name = #{name}</if>
-            <if test="passwd!=null">passwd = #{passwd}</if>
-            <if test="isEnable!=null">is_enable = #{isEnable}</if>
+            <if test="name!=null and name!=''">name = #{name},</if>
+            <if test="passwd!=null and passwd!=''">passwd = #{passwd},</if>
+            <if test="isEnable!=null">is_enable = #{isEnable},</if>
         </set>
         where id = #{id}
     </update>

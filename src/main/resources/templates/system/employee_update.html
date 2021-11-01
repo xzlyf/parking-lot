@@ -20,10 +20,11 @@
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
         <legend>员工信息</legend>
     </fieldset>
+    <input type="hidden" id="userId" name="id">
     <div class="layui-form-item">
         <label class="layui-form-label">启用账号</label>
         <div class="layui-input-block">
-            <input id="isEnable" type="checkbox" name="isEnable" lay-skin="switch" lay-text="ON|OFF">
+            <input id="isEnable" type="checkbox" name="isEnable" lay-skin="switch" lay-text="ON|OFF" value="1" >
         </div>
     </div>
     <div class="layui-form-item">
@@ -37,13 +38,6 @@
         <label class="layui-form-label">密码</label>
         <div class="layui-input-inline">
             <input id="passwd" type="text" name="passwd" placeholder="请输入" autocomplete="off" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">电话</label>
-        <div class="layui-input-inline">
-            <input id="tel" type="tel" name="phone" placeholder="请输入"
-                   autocomplete="off" class="layui-input">
         </div>
     </div>
     <fieldset class="layui-elem-field" style="margin: 20px;padding: 20px;width: 500px">
@@ -74,13 +68,13 @@
                 data: data.field,
                 dataType: 'json',
                 success: function (res) {
-                    console.log(res)
-                    // if (res.code === 200) {
-                    //     //刷新父类页面
-                    //     parent.location.reload();
-                    // } else {
-                    //     layer.msg('修改失败，请稍后重试')
-                    // }
+                    if (res.code === 200) {
+                        //刷新父类页面
+                        parent.location.reload();
+                        // layer.msg('修改成功')
+                    } else {
+                        layer.msg('修改失败，请稍后重试')
+                    }
                 },
                 error: function (ex) {
                     layer.msg('操作失败')
@@ -106,6 +100,7 @@
                 }
                 var user = res.data[0]
                 //渲染用户数据
+                $('#userId').attr("value", user.id)
                 $('#name').attr('value', user.name)
                 $('#isEnable').prop("checked", user.isEnable)
                 //把用户权限给选择上，这里写的要有点复杂
@@ -118,8 +113,9 @@
                     var role_name = user.roles[i].name
                     var params = 'input[title=' + role_name + ']'
                     $(params).prop("checked", true)
-                    layui.form.render();
                 }
+                //重新渲染表单
+                layui.form.render();
             }
         })
     }

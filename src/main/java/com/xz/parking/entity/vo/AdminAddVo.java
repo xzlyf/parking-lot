@@ -11,6 +11,5 @@ import lombok.Data;
 public class AdminAddVo {
     private String name;
     private String passwd;
-    private String phone;
     private Integer[] perms;
 }
