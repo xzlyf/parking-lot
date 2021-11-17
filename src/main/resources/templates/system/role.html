@@ -9,15 +9,25 @@
 <body style="padding: 20px 20px">
 
 <h1>权限控制面板</h1>
-
+<table class="layui-hide" id="roleList"></table>
 <script src="../../static/layui/layui.js"></script>
 
 <script th:inline="none">
-    layui.use([], function () {
-        var $ = layui.$;
+    layui.use('table', function(){
+        var table = layui.table;
 
+        table.render({
+            elem: '#roleList'
+            ,url:'/role/findAll'
+            ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            ,cols: [[
+                {field:'id', width:80, title: 'ID', sort: true}
+                ,{field:'name', width:80, title: '名称'}
+                ,{field:'scope', width:80, title: '标识', sort: true}
+                ,{field:'description', width:80, title: '备注'}
+            ]]
+        });
     });
-
 
 </script>
 </body>

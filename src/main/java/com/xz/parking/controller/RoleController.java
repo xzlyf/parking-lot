@@ -1,6 +1,6 @@
 package com.xz.parking.controller;
 
-import com.xz.parking.entity.Result;
+import com.xz.parking.entity.ResultPage;
 import com.xz.parking.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +26,6 @@ public class RoleController {
     @GetMapping("/findAll")
     @ResponseBody
     public Object getRoles() {
-        return Result.ok(roleService.findAll());
+        return ResultPage.ok(roleService.findAll());
     }
 }
