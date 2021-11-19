@@ -8,24 +8,29 @@
 </head>
 <body style="padding: 20px 20px">
 
-<h1>权限控制面板</h1>
+<h1>权限列表</h1>
 <table class="layui-hide" id="roleList"></table>
 <script src="../../static/layui/layui.js"></script>
-
 <script th:inline="none">
-    layui.use('table', function(){
+    layui.use('table', function () {
         var table = layui.table;
 
         table.render({
             elem: '#roleList'
-            ,url:'/role/findAll'
-            ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
-            ,cols: [[
-                {field:'id', width:80, title: 'ID', sort: true}
-                ,{field:'name', width:80, title: '名称'}
-                ,{field:'scope', width:80, title: '标识', sort: true}
-                ,{field:'description', width:80, title: '备注'}
+            , url: '/role/findAll'
+            , width: 800
+            , cols: [[
+                {field: 'id', title: 'ID', width: 60, align: 'center', sort: true}
+                , {field: 'name', title: '名称'}
+                , {field: 'scope', title: '标识', sort: true}
+                , {field: 'description', title: '备注'}
+                , {field: 'createDate', title: '创建时间'}
             ]]
+            //绑定业务字段
+            , response: {
+                statusName: 'code', //规定返回的状态码字段为code
+                statusCode: 200 //规定成功的状态码为0
+            }
         });
     });
 

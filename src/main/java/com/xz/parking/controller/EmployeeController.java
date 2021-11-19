@@ -4,10 +4,10 @@ import com.github.pagehelper.PageInfo;
 import com.xz.parking.entity.Result;
 import com.xz.parking.entity.ResultCode;
 import com.xz.parking.entity.ResultPage;
+import com.xz.parking.entity.po.RolePo;
 import com.xz.parking.entity.vo.AdminAddVo;
 import com.xz.parking.entity.vo.AdminUpdateVo;
 import com.xz.parking.entity.vo.AdminVo;
-import com.xz.parking.entity.vo.RoleVo;
 import com.xz.parking.service.EmployeeService;
 import com.xz.parking.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class EmployeeController {
     @GetMapping("/index_add")
     public ModelAndView toAdd() {
         ModelAndView modelAndView = new ModelAndView();
-        List<RoleVo> all = roleService.findAll();
+        List<RolePo> all = roleService.findAll();
         modelAndView.addObject("roles", all);
         modelAndView.setViewName("system/employee_add");
         return modelAndView;
@@ -47,7 +47,7 @@ public class EmployeeController {
     @GetMapping("/index_update")
     public ModelAndView toUpdate(@RequestParam String employeeNo) {
         ModelAndView modelAndView = new ModelAndView();
-        List<RoleVo> roles = roleService.findAll();
+        List<RolePo> roles = roleService.findAll();
         AdminVo adminVo = employeeService.queryAdminByEmployeeNo(employeeNo);
         modelAndView.addObject("roles", roles);
         modelAndView.addObject("user", adminVo);

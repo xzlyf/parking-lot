@@ -1,6 +1,6 @@
 package com.xz.parking.service;
 
-import com.xz.parking.entity.vo.RoleVo;
+import com.xz.parking.entity.po.RolePo;
 
 import java.util.List;
 
@@ -9,5 +9,5 @@ import java.util.List;
  * @Date: 2021/10/28
  */
 public interface RoleService {
-    List<RoleVo> findAll();
+    List<RolePo> findAll();
 }

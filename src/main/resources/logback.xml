@@ -11,6 +11,7 @@
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
         </encoder>
     </appender>
+
     <!-- 按照每天生成日志文件 -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -28,6 +29,23 @@
             <MaxFileSize>10MB</MaxFileSize>
         </triggeringPolicy>
     </appender>
+
+    <!--输出到控制台(带颜色的日志-_-)-->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <withJansi>true</withJansi>
+        <encoder>
+            <!--<pattern>%d %p (%file:%line\)- %m%n</pattern>-->
+            <!--格式化输出：%d:表示日期    %thread:表示线程名     %-5level:级别从左显示5个字符宽度  %msg:日志消息    %n:是换行符-->
+            <pattern>%black(%d{yyyy-MM-dd HH:mm:ss}) %red([%thread]) %highlight(%-5level) %boldMagenta(%logger{10}) -
+                %cyan(%msg%n)
+            </pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
 
     <!-- 日志输出级别 -->
     <logger name="org.springframework" level="INFO"/>

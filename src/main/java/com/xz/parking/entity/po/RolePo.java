@@ -3,6 +3,7 @@ package com.xz.parking.entity.po;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @Author: xz
@@ -26,4 +27,14 @@ public class RolePo implements Serializable {
      * 权限标识
      */
     private String scope;
+
+    /**
+     * 创建时间
+     */
+    private Date createDate;
+
+    /**
+     * 更新时间
+     */
+    private Date updateDate;
 }
