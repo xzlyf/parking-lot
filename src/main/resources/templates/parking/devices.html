@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>标题</title>
+    <link rel="stylesheet" href="../../static/layui/css/layui.css">
+
+</head>
+<body style="padding: 20px 20px">
+
+<div class="layui-form">
+    <div class="layui-input-inline">
+        <button type="button" id="addUser" class="layui-btn layui-btn-md">新增员工</button>
+    </div>
+    <div class="layui-input-inline">
+        <button type="button" id="deleteUser" class="layui-btn layui-btn-md">删除员工</button>
+    </div>
+</div>
+
+<table class="layui-hide" id="list"></table>
+
+</body>
+<script src="../../static/layui/layui.js"></script>
+<script th:inline="none">
+    layui.use('table', function () {
+        var table = layui.table;
+
+        table.render({
+            elem: '#list'
+            , url: '/device/findAll'
+            , width: 800
+            , cols: [[
+                {field: 'id', title: 'ID', width: 60, align: 'center', sort: true}
+                , {field: 'name', title: '名称'}
+                , {field: 'scope', title: '标识', sort: true}
+                , {field: 'description', title: '备注'}
+                , {field: 'createDate', title: '创建时间'}
+            ]]
+            //绑定业务字段
+            , response: {
+                statusName: 'code', //规定返回的状态码字段为code
+                statusCode: 200 //规定成功的状态码为0
+            }
+        });
+    });
+
+</script>
+</html>

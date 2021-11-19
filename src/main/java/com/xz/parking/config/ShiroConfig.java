@@ -40,6 +40,7 @@ public class ShiroConfig {
         filterMap.put("/console/**","e-perms[ADMIN|EMPL]");
         filterMap.put("/employee/**","e-perms[ADMIN]");
         filterMap.put("/role/**","e-perms[ADMIN]");
+        filterMap.put("/device/**","e-perms[ADMIN]");
 
         bean.setFilterChainDefinitionMap(filterMap);
 
